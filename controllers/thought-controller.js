@@ -1,7 +1,7 @@
 const { Thoughts, User, Types } = require('../models');
 
 const ThoughtController = {
-    getAllThoughts(req, res) {
+    getAllThoughts( res) {
         Thoughts.find({})
             .select("-__v")
             .sort({ _id: -1 })
@@ -11,6 +11,21 @@ const ThoughtController = {
                 res.status(400).json(err);
             });
     },
+    updateThoughts({ params, body}, res) {
+            Thoughts.findOneAndUpdate({_id: params.id}, body, {
+                new: true,
+                runValidators: true,
+                //tells the program to register a new update for user then run the validators.
+            })
+            .then((dbThoughtsData) => {
+                if (!dbThoughtsData) {
+                    res.status(404).json({ message: "can not find thought with this id"})
+                return; 
+            }
+            res.json(dbThoughtsData)
+            })
+            .catch((err) => res.status(400).json(err))
+        },
     getThoughtById({ params }, res) {
         console.log("params sent", params)
         Thoughts.findOne({ _id: params.thoughtId })

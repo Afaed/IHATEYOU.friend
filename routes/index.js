@@ -6,6 +6,6 @@ const thoughtRoutes = require ('./api./thought-routes')
 //these are the routes we use
 
 router.use('/User', userRoutes)
-router.use('/thoughts', thoughtRoutes)
+router.use('/Thoughts', thoughtRoutes)
 
 module.exports = router
