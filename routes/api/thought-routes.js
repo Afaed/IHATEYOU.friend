@@ -8,7 +8,7 @@ const {
     removeThoughts,
     addReaction,
     removeReaction
-} = ('../../controllers/thoughts-controller')
+} = ('../../controllers/thought-controller')
 
 router
 .route('/')
@@ -20,7 +20,7 @@ router
 
 router
     .route('/:thoughtId')
-    .get(getAllThoughtsById)
+    .get(getThoughtsById)
     .put(updateThoughts)
     .delete(removeThoughts)
 

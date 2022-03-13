@@ -1,9 +1,8 @@
-const { Thought, User, Types } = require('../models');
-
+const { Thoughts, User, Types } = require('../models');
 
 const ThoughtController = {
     getAllThoughts(req, res) {
-        Thought.find({})
+        Thoughts.find({})
             .select("-__v")
             .sort({ _id: -1 })
             .then((dbThoughtData) => res.json(dbThoughtData))
@@ -14,7 +13,7 @@ const ThoughtController = {
     },
     getThoughtById({ params }, res) {
         console.log("params sent", params)
-        Thought.findOne({ _id: params.thoughtId })
+        Thoughts.findOne({ _id: params.thoughtId })
       .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
@@ -31,7 +30,7 @@ const ThoughtController = {
     // add thought to User
     addThought({ params, body }, res) {
         console.log("INCOMING BODY", body)
-        Thought.create(body)
+        Thoughts.create(body)
             .then(({ _id }) => {
                 return User.findOneAndUpdate(
                     { _id: params.userId },
@@ -50,7 +49,7 @@ const ThoughtController = {
     },
     // remove thought
     removeThought({ params }, res) {
-        Thought.findOneAndDelete({ _id: params.thoughtId })
+        Thoughts.findOneAndDelete({ _id: params.thoughtId })
             .then(deletedthought => {
                 if (!deletedthought) {
                     return res.status(404).json({ message: 'No thought with this id!' });
@@ -68,7 +67,7 @@ const ThoughtController = {
     },
     addReaction({ params, body }, res) {
         console.log("INCOMING BODY", body)
-        Thought.findOneAndUpdate(
+        Thoughts.findOneAndUpdate(
             { _id: params.thoughtId },
             { $push: { reactions: body } },
             { new: true }
@@ -84,7 +83,7 @@ const ThoughtController = {
     },
     // remove reaction
     removeReaction({ params }, res) {
-        Thought.findOneAndUpdate(
+        Thoughts.findOneAndUpdate(
             { _id: params.thoughtId },
             { $pull: { reactions: { reactionId: params.reactionId } } },
             { new: true }
