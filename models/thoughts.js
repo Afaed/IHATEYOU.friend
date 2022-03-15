@@ -47,7 +47,7 @@ const thoughtSchema = new Schema(
             required: true
         },
         reaction: [
-            reactionSchema
+            [reactionSchema]
         ]
     },
     {
@@ -62,6 +62,6 @@ thoughtSchema.virtual('reactionCount').get(function(){
     return this.reaction.length
 })
 
-const thoughts = model('thoughts', thoughtSchema)
+const Thoughts = model('Thoughts', thoughtSchema)
 
-module.exports = thoughts;
+module.exports = Thoughts;

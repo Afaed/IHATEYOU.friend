@@ -1,13 +1,15 @@
 const { User, Thoughts } = require('../models');
 const { populate } = require("../models/User")
+
 const userController = {
-    getAllUsers( res ) {
+    getAllUsers( {params}, res ) {
         User.find({})
             .populate({
                 path: 'thoughts',
                 select: ('-__v')
             })
             .select('-__v')
+            .sort({ _id: -1})
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
