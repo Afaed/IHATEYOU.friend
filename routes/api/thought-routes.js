@@ -15,7 +15,7 @@ router
 .get(getAllThoughts)
 
 router
-    .route('/:userId')
+    .route('/')
     .post(createThought)
 
 router
@@ -28,3 +28,5 @@ router
     .route('/:thoughtId/reactions')
     .post(addReaction)
     .delete(deleteReaction)
+
+module.exports = router
