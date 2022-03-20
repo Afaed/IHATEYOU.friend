@@ -84,7 +84,7 @@ const userController = {
       },
       addFriend({ params}, res) {
           User.findByIdAndUpdate(
-              { _id: patams.id },
+              { _id: params.id },
               { $addToSet: { friends: params.friendId } },
               { new: true }
           )
